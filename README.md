@@ -1,18 +1,8 @@
 # Cyclist
 Data Analysis Google Certification Capstone Project
----
-title: "Cyclist_CaseStudy"
-author: "Karen Muñoz"
-date: "2023-10-30"
-output: html_document: default
 
 ---
-
-```{r setup}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-## Introduction
+Introduction
 
 Hello, everyone!
 I wanted to introduce myself before showing you my work.
@@ -21,21 +11,23 @@ I decided to look for a new career path at the ripe age of 28 haha in the year 2
 Not really knowing what I was getting myself into, I started learning SEO, then I started a course on Marketing and E-Commerce and finally I got an scholarship to study Data Analysis and Project Management, both of which are Google Certificates.
 This is the Capstone Project of the Data Analysis Online Course.
 The material and questions were given to me to prepare a Case Study and showcase my knowledge.
-For those of you who are not in the data science road, there are six steps for data analysis: ● Ask ● Prepare ● Process ● Analyse ● Share ● Act
+For those of you who are not in the data science road, there are six steps for data analysis: 
+● Ask ● Prepare ● Process ● Analyse ● Share ● Act
 
 So, let's start:
 
 ## Ask
 
-Guiding questions ● What is the problem you are trying to solve?
-I will try to produce a report with the following deliverables: 1.
-A clear statement of the business task 2.
-A description of all data sources used 3.
-Documentation of any cleaning or manipulation of data 4.
-A summary of your analysis 5.
-Supporting visualizations and key findings 6.
-Top three recommendations based on my analysis to answer the question *"How do annual members and casual riders use Cyclistic bikes differently?"*.
-I will calculate the the number of trips per membership type, the average length of trip per membership type, the type of bike preferred by membership type, and the preferred start and end stations.
+● What is the problem you are trying to solve?
+I will try to produce a report with the following deliverables:
+A clear statement of the business task.
+A description of all data sources used.
+Documentation of any cleaning or manipulation of data.
+A summary of your analysis.
+Supporting visualizations and key findings.
+Top three recommendations based on my analysis.
+
+To answer the question *"How do annual members and casual riders use Cyclistic bikes differently?"* I will calculate the the number of trips per membership type, the average length of trip per membership type, the type of bike preferred by membership type, and the preferred start and end stations.
 
 ● How can your insights drive business decisions?
 A data anaylist's insights are well-researched and based on data-analysis.
@@ -43,11 +35,10 @@ The insights influence business decision to a great extent since they lead to re
 
 ## Prepare
 
-Guiding questions ● Where is your data located?
+● Where is your data located?
 The .cvs data is located in zip files in an index made available by Motivate International Inc. ● How is the data organized?
 The data is organized yearly and quarterly.
-● Are there issues with bias or credibility in this data?
-Does your data ROCCC?
+● Are there issues with bias or credibility in this data? Does your data ROCCC?
 ROCCC which stands for Reliable, Original, Comprehensive, Current, and Cited.
 The It was made available by Motivate International Inc. under [this licence](https://divvybikes.com/data-license-agreement).
 
@@ -56,37 +47,24 @@ Original --- Yes, it is provided by the company itself.
 It is first-party data.
 Comprehensive --- Yes, it includes duration, start and end stations.
 All the information needed to answer the business question.
-Current --- Yes, the data is current and updated on a monthly schedule.
-However, I will be using a data set from the first quarter of 2021, since it is the last data set available at a bigger scale.
-The other file availables are monthly.
+Current --- Yes, the data is current and updated on a monthly schedule. However, I will be using a summary of the first quarter of 2020. 
 Cited --- The company collects the data itself, but I am unsure of the process, hence unknown.
 ● How are you addressing licensing, privacy, security, and accessibility?
 The licence has already been cited.
 The data was anonymized and therefore private.
-The data is stored in the hard drive of my computer The data is open-source, so it is available for free downloading.
+The data is stored in the hard drive of my computer.
+The data is open-source, so it is available for free downloading.
 ● How did you verify the data's integrity?
 I checked the website and the licence.
 ● How does it help you answer your question?
 It gives me information about the different type of riders.
 ● Are there any problems with the data?
-There is a lot of information and the files are separate by month, which doesn't allow for a through case study.
-Therefore I will be using data that is not current (first quarter of 2020) for this Case Study.
+There is a lot of information and the files are separate by month, which doesn't allow for a thorough case study.
+Therefore I will be using data that is not current (first quarter of 2020) for this case study.
 
-First, I will set up the environment:
+I will be using SQL for the analysis of this data. I tried using R and the program kept crashing. 
 
-```{r setting up the environment, message=TRUE, warning=TRUE}
-install.packages("tidyverse")
-library(tidyverse)
-install.packages("readr")
-```
-
-and load the dataset:
-
-```{r loading dataset, warning=TRUE}
-library(readr)
-Divvy_Trips_2020_Q1 <- read_csv("Capstone_Cyclistic/Divvy_Trips_2020_Q1.csv")
-
-```
+First, create a new data set and upload the table with the data. 
 
 ## Process
 
