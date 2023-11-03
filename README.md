@@ -22,7 +22,6 @@ So, let's start:
 In order to do that, however, the marketing analyst team needs to better understand how annual members and casual riders differ, why casual
 riders would buy a membership, and how digital media could affect their marketing tactics.
 
-# This analysis is for case study 1 from the Google Data Analytics Certificate (Cyclistic).  It’s originally based on the case study "'Sophisticated, Clear, and Polished’: Divvy and Data Visualization" written by Kevin Hartman (found here: https://artscience.blog/home/divvy-dataviz-case-study). We will be using the Divvy dataset for the case study. The purpose of this script is to consolidate downloaded Divvy data into a single dataframe and then conduct simple analysis to help answer the key question: “In what ways do members and casual riders use Divvy bikes differently?”
 
 # # # # # # # # # # # # # # # # # # # # # # # 
 #Install required packages
@@ -39,7 +38,7 @@ library(ggplot2)  #helps visualize data
 #=====================
 # STEP 1: COLLECT DATA
 #=====================
-# Upload Divvy datasets (csv files) here
+#Upload Divvy datasets (csv files) here
 
 ```{r setting up the environment, message=FALSE, warning=FALSE}
 install.packages("tidyverse")
@@ -62,12 +61,12 @@ I want to emphasize that I will be working ONLY with the first quarter of 2020 d
 #======================================================
 # STEP 3: CLEAN UP AND ADD DATA TO PREPARE FOR ANALYSIS
 #======================================================
-# Inspect the new dataframe that has been created
+#Inspect the new dataframe that has been created
 
 ```{r cleaning, message=TRUE, warning=TRUE}
 install.packages("janitor")
 library(janitor)
-# I will review the column names to check if they need to be renamed using clean_names() or if they are ready to be worked with. In this case, they are all lowercase, a reasonable length and don't have any  unnecessary additional characters. They are easy to read and cite, so we won't be doing any changes.
+#I will review the column names to check if they need to be renamed using clean_names() or if they are ready to be worked with. In this case, they are all lowercase, a reasonable length and don't have any  unnecessary additional characters. They are easy to read and cite, so we won't be doing any changes.
 
 colnames(Divvy_Trips_2020_Q1) 	#to see the column names
 head(Divvy_Trips_2020_Q1)		#to see the first six rows
@@ -84,7 +83,7 @@ Divvy_Trips_2020_Q1$ended_at <- ymd_hms(Divvy_Trips_2020_Q1$ended_at)
 
 ```
 
-# Remove "bad" data
+#Remove "bad" data
 I noticed there are negative time calculations. This is due to faulty data probably either due to bike maintenance or error by the user. Since this data is irrelevant, I will apply a filter to leave any trip duration under three minutes out of the equation. 
 In a normal environment, I would ask what to do. 
 
@@ -94,7 +93,7 @@ In a normal environment, I would ask what to do.
 Divvy_Trips_2020_Q1$duration <- difftime(Divvy_Trips_2020_Q1$ended_at, Divvy_Trips_2020_Q1$started_at, units = "mins")
 ```
 
-# We will create a new version of the dataframe (“clean_Divvy” from now on) since data is being removed:
+#We will create a new version of the dataframe (“clean_Divvy” from now on) since data is being removed:
 
 ```{r cleaning irrelevant data}
 install.packages("dplyr")
@@ -110,17 +109,43 @@ Now that we have only relevant information about the trips, let's dive into the 
 # STEP 4: CONDUCT DESCRIPTIVE ANALYSIS
 #=====================================
 
-#Let’s see how many riders for each membership type are subscribed: 
+#Let’s see how many rides were performed by each membership type: 
 
 ```{r membership type count}
 clean_Divvy %>%
   group_by(member_casual) %>%
   summarise(count = n())
 ```
-
 There are more annual members than casual riders for this service. 
 
-# Descriptive analysis on ride duration
+
+#Let's see how they differ on a daily basis: 
+
+```{r daily use by membership}
+library(dplyr)
+library(lubridate)
+
+daily_use <- clean_Divvy %>%
+  mutate(date = as.Date(started_at)) %>%
+  group_by(date, member_casual) %>%   #to see each day summary by membership type
+  summarise(count = n())
+print(mean_duration_by_day)
+
+#and now let's plot
+
+ggplot(daily_use, aes(x = date, y = count)) +
+  geom_line() + 
+  labs(title = "Use by Date",
+       x = "Date",
+       y = "No. Rides") +
+  theme_minimal() +
+facet_wrap(~member_casual) #add if we want to separate both membership types
+
+
+```
+
+
+#Descriptive analysis on ride duration
 #Let's analyse how long each membership type uses the service
 
 ```{r mean time of duration by membership}
@@ -131,7 +156,7 @@ clean_Divvy %>%
   summarise(mean_duration = mean(duration))
   
 ```
-However, casual members have a higher average length of ride. 
+However, casual members have a higher average length. 
 That is unusual Let's see why:
 
 #max duration by membership type 
@@ -151,7 +176,7 @@ Casual members have a higher average length of ride with a max of 156450.40 min.
 The longest ride by a casual member was over 108 days! 
 That is very unusual, but as we can see below, the three longest rides for casual riders are all over 80 days long. We will be keeping the data since I don't have further information about these cases.
 
-# See the average ride time each day for both membership types
+#See the average ride time each day for both membership types
 
 ```{r duration by day}
 library(dplyr)
@@ -470,6 +495,11 @@ I will use color schemes that are appropriate and label the information. I will 
 
 ## Act 
 What is your final conclusion based on your analysis? 
+Casual riders use the service sporadically only for leisure and entertainment purposes while annual members use the service for commuting. 
+In order to get a higher engagement from casual riders, the service should include perks based on their preferences. 
 How could your team and business apply your insights? 
+The insights lead to business recommendations for the service itself and for marketing purposes. 
 What next steps would you or your stakeholders take based on your findings? 
+Trial version of the suggestions or market study on the suggested perks. 
 Is there additional data you could use to expand on your findings?
+Market study for the suggested perks and personal information about the users. 
